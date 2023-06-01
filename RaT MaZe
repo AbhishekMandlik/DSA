@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+void ratmaze(int arr[][20], int n, int**final,int row,int col){
+	if(row==n-1 &&col==n-1){
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				cout<<final[i][j]<<" ";
+			}
+		}
+		cout<<endl;
+		return;
+	}
+	if(row<0 || row>n-1 || col<0||col>n-1||final[row][col]==1|| arr[row][col]==0){
+		return;
+	}
+	final[row][col]=1;
+	ratmaze(arr,n,final,row-1,col);
+	ratmaze(arr,n,final,row+1,col);
+	ratmaze(arr,n,final,row,col-1);
+	ratmaze(arr, n, final, row, col + 1);
+	final[row][col] = 0;
+	return;
+}
+
+void rm(int arr[][20], int n){
+	int** final = new int*[n];
+    for(int k=0;k<n;k++){
+        final[k]=new int[n];
+    }
+	final[n-1][n-1]=1;
+    ratmaze(arr, n,final ,0, 0);
+	for (int h = 0; h < n; h++) {
+        delete[] final[h];
+    }
+    delete [] final;
+
+}
+int main() {
+	int n;
+	cin>>n;
+	int arr[20][20];
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			int a;
+			cin>>a;
+			arr[i][j]=a;
+		}
+	}
+	rm(arr,n);
+	return 0;
+}
