@@ -1,0 +1,14 @@
+//conditions are majority element appears more than n/2 times
+//eNjOy
+int majorityElement(vector<int>& nums){
+        int count=0;
+        int majority=0;
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            if(count==0) majority=nums[i];
+
+            if(majority==nums[i]) count++;
+            else count=count-1;
+        }
+        return majority;
+    }
