@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int helper(vector<int>& cost, vector<int>& time,int total,int index,vector<vector<int>>&dp){
+        if(total<=0) return 0;
+        if(index<0) return 1e9;
+        if(dp[index][total]!=-1) return dp[index][total];
+        int take= cost[index]+helper(cost,time,total-time[index]-1,index-1,dp);
+        int ntake=helper(cost,time,total,index-1,dp);
+        return dp[index][total]=min(take,ntake);
+    }
+    int paintWalls(vector<int>& cost, vector<int>& time) {
+        int n= cost.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        return helper(cost,time,n,n-1,dp);
+    }
+};
