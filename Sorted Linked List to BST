@@ -1,0 +1,22 @@
+class Solution{
+  public:
+    TNode*helper(int s ,int e,vector<int>&ans){
+        if(s>e){
+            return NULL;
+        }
+        int mid = (s+e+1)/2;
+        TNode*root = new TNode(ans[mid]);
+        root->left = helper(s,mid-1,ans);
+        root->right = helper(mid+1,e,ans);
+        return root;
+    }
+    TNode* sortedListToBST(LNode *head) {
+        //code here
+        vector<int>v;
+        while(head!=NULL){
+            v.push_back(head->data);
+            head=head->next;
+        }
+        return helper(0,v.size()-1,v);
+    }
+};
