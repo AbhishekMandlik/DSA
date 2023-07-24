@@ -1,0 +1,56 @@
+class Solution
+{
+  public:
+ int  ans=-1;
+ void solve(int parent,unordered_map<int,vector<int>> &adj, vector<int> &visited, vector<int> &dfsVisit,int node,vector<int> &par,vector<int> &temp){
+    visited[node]=1;
+    dfsVisit[node]=true;
+    par[node]=parent;
+    temp.push_back(node);
+    
+    for(auto i : adj[node]){
+        if(visited[i]==0){
+            solve(node,adj,visited,dfsVisit,i,par,temp);
+        }
+        else if(dfsVisit[i]==true && visited[i]!=2){
+           int sum=i;
+            while(node!=i){
+                sum+=node;
+                node=par[node];
+            }
+            
+            ans=max(ans,sum);
+            return ;
+        }
+    }
+    dfsVisit[node]=false;
+  //  return false;
+}
+
+  long long largestSumCycle(int N, vector<int> Edge)
+  {
+    // code here
+    unordered_map<int,vector<int>> adj;
+    for(int i=0;i<N;i++){
+        if(Edge[i]!=-1){
+          adj[i].push_back(Edge[i]);
+          //adj[Edge[i]].push_back(i);
+        }
+    }
+    vector<int> par(N,-1);
+     vector<int> vis(N,0);
+    vector<int> dfsVis(N,0);
+        
+ for(int i=0;i<N;i++){
+        if(vis[i]==0){
+            vector<int> temp;
+            solve(-1,adj,vis,dfsVis,i,par,temp);
+            for(auto &j : temp){
+                vis[j]=2;
+            }
+         //   temp.clear();
+       }
+  }
+    return ans;
+  }
+};
