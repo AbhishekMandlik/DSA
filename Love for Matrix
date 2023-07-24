@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    int firstElement(int n){
+        int i=1;
+        int current=1;
+        int next=1;
+        int mod=1000000007;
+        while(i<n){
+            int temp=(current+next)%mod;
+            current=next%mod;
+            next=temp%mod;
+            i++;
+        }
+        return current%mod;
+    }
+};
